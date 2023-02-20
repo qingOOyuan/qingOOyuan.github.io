@@ -4,11 +4,38 @@
   
     
     <entry>
-      <title>Makefile实例</title>
-      <link href="/2023/02/20/Linux%E9%A9%B1%E5%8A%A8-Makefile-Makefile%E5%AE%9E%E4%BE%8B/"/>
-      <url>/2023/02/20/Linux%E9%A9%B1%E5%8A%A8-Makefile-Makefile%E5%AE%9E%E4%BE%8B/</url>
+      <title>LCD实例</title>
+      <link href="/2023/02/20/LCD-test/"/>
+      <url>/2023/02/20/LCD-test/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h3 id="1-应用工程师眼里看到的LCD"><a href="#1-应用工程师眼里看到的LCD" class="headerlink" title="1. 应用工程师眼里看到的LCD"></a>1. 应用工程师眼里看到的LCD</h3><p>要想看博客看到图片，图片的目录必须和文章名相同</p><p><a href="https://zhuanlan.zhihu.com/p/542101567">https://zhuanlan.zhihu.com/p/542101567</a></p><p>LCD由一个一个像素组成：每行有xres个像素，有yres行，它的分辨率是：xres * yres。</p><p><img src="001_lcd_pixels.png" alt="LCD"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux驱动 </category>
+          
+          <category> Makefile </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Makefile </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Makefile实例</title>
+      <link href="/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/"/>
+      <url>/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/</url>
+      
+        <content type="html"><![CDATA[<h3 id="1-工程师眼里看到的Makefile"><a href="#1-工程师眼里看到的Makefile" class="headerlink" title="1. 工程师眼里看到的Makefile"></a>1. 工程师眼里看到的Makefile</h3>]]></content>
       
       
       <categories>
@@ -32,8 +59,8 @@
     
     <entry>
       <title>同步与互斥</title>
-      <link href="/2023/02/20/Linux%E9%A9%B1%E5%8A%A8-%E9%9F%A6%E4%B8%9C%E5%B1%B12440%E8%AF%BE%E7%A8%8B-%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/"/>
-      <url>/2023/02/20/Linux%E9%A9%B1%E5%8A%A8-%E9%9F%A6%E4%B8%9C%E5%B1%B12440%E8%AF%BE%E7%A8%8B-%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/</url>
+      <link href="/2023/02/20/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/"/>
+      <url>/2023/02/20/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -57,8 +84,8 @@
     
     <entry>
       <title>进程的前世今生</title>
-      <link href="/2023/02/19/Linux%E5%BA%94%E7%94%A8-fork/"/>
-      <url>/2023/02/19/Linux%E5%BA%94%E7%94%A8-fork/</url>
+      <link href="/2023/02/19/fork/"/>
+      <url>/2023/02/19/fork/</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -84,22 +111,22 @@
     
     
     <entry>
-      <title>关于</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>分类</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
-        <content type="html"><![CDATA[<p>路虽远行则将至，事虽难做则必成！</p>]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
     
     
     <entry>
-      <title>分类</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>关于</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>路虽远行则将至，事虽难做则必成！</p>]]></content>
       
     </entry>
     
