@@ -1,0 +1,30 @@
+/* 文章页背景 */
+.layout_post>#post {
+    /* 以下代表透明度为0.5 可以自行修改*/
+    background: rgba(255,255,255,.9);
+}
+/* 所有页面背景 */
+#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post{
+    /* 以下代表透明度为0.5 */
+    background: rgba(255,255,255,.8);
+}
+
+/* 翻页按钮居中 */
+#pagination {
+	width: 100%;
+	margin: auto;
+ }
+
+/*白天主题下的配置*/
+#aside-content>.card-widget.card-info {
+    /*换成自己图片的地址*/
+    background-image: url('/img/card.jpg');
+    background-repeat: no-repeat;
+    background-attachment: inherit;
+    background-size: 100%
+}
+/*黑暗主题下的配置*/
+[data-theme=dark] #aside-content>.card-widget.card-info {
+    /*换成自己图片的地址*/
+    background-image: url('./img/card.jpg') !important
+}
