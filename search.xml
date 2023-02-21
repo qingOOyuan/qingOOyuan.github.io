@@ -4,38 +4,11 @@
   
     
     <entry>
-      <title>Makefile实例</title>
-      <link href="/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/"/>
-      <url>/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/</url>
-      
-        <content type="html"><![CDATA[<h3 id="1-工程师眼里看到的Makefile"><a href="#1-工程师眼里看到的Makefile" class="headerlink" title="1. 工程师眼里看到的Makefile"></a>1. 工程师眼里看到的Makefile</h3>]]></content>
-      
-      
-      <categories>
-          
-          <category> Linux驱动 </category>
-          
-          <category> Makefile </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Makefile </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>LCD实例</title>
       <link href="/2023/02/20/LCD-test/"/>
       <url>/2023/02/20/LCD-test/</url>
       
-        <content type="html"><![CDATA[<h3 id="1-应用工程师眼里看到的LCD"><a href="#1-应用工程师眼里看到的LCD" class="headerlink" title="1. 应用工程师眼里看到的LCD"></a>1. 应用工程师眼里看到的LCD</h3><p>要想看博客看到图片，图片的目录必须和文章名相同</p><p>命令窗口输入ipconfig／flushdns回车 刷新DNS缓存可以解决阿里云dns状态异常</p><p>我们在执行“<a href="https://so.csdn.net/so/search?q=hexo&spm=1001.2101.3001.7020">hexo</a> d”，部署到git仓库时，发现之前设置的自定义域名失效，恢复为默认域名（仓库名），每次更新部署都需要重新设置。解决办法：配置文件“_contig.yml的url改成我们的域名，同时添加CNAME里面写上我们的域名</p><p><a href="https://zhuanlan.zhihu.com/p/542101567">https://zhuanlan.zhihu.com/p/542101567</a></p><p>LCD由一个一个像素组成：每行有xres个像素，有yres行，它的分辨率是：xres * yres。</p><p><img src="001_lcd_pixels.png" alt="LCD"></p>]]></content>
+        <content type="html"><![CDATA[<h3 id="1-应用工程师眼里看到的LCD"><a href="#1-应用工程师眼里看到的LCD" class="headerlink" title="1. 应用工程师眼里看到的LCD"></a>1. 应用工程师眼里看到的LCD</h3><p>要想看博客看到图片，图片的目录必须和文章名相同</p><p>命令窗口输入ipconfig／flushdns回车 刷新DNS缓存可以解决阿里云dns状态异常</p><p>我们在执行“<a href="https://so.csdn.net/so/search?q=hexo&spm=1001.2101.3001.7020">hexo</a> d”，部署到git仓库时，发现之前设置的自定义域名失效，恢复为默认域名（仓库名），每次更新部署都需要重新设置。解决办法：配置文件“同时添加CNAME里面写上我们的域名</p><p><a href="https://zhuanlan.zhihu.com/p/542101567">https://zhuanlan.zhihu.com/p/542101567</a></p><p>LCD由一个一个像素组成：每行有xres个像素，有yres行，它的分辨率是：xres * yres。</p><p><img src="001_lcd_pixels.png" alt="LCD"></p>]]></content>
       
       
       <categories>
@@ -83,6 +56,33 @@
     
     
     <entry>
+      <title>Makefile实例</title>
+      <link href="/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/"/>
+      <url>/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/</url>
+      
+        <content type="html"><![CDATA[<h3 id="1-工程师眼里看到的Makefile"><a href="#1-工程师眼里看到的Makefile" class="headerlink" title="1. 工程师眼里看到的Makefile"></a>1. 工程师眼里看到的Makefile</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux驱动 </category>
+          
+          <category> Makefile </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Makefile </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>进程的前世今生</title>
       <link href="/2023/02/19/fork/"/>
       <url>/2023/02/19/fork/</url>
@@ -122,9 +122,9 @@
     
     
     <entry>
-      <title>link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>分类</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -133,9 +133,9 @@
     
     
     <entry>
-      <title>分类</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
