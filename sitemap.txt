@@ -1,3 +1,4 @@
+https://www.onechip.net/2023/02/22/%E6%96%B0%E7%9A%84/
 https://www.onechip.net/2023/02/20/LCD-test/
 https://www.onechip.net/2023/02/20/hh-%E5%89%AF%E6%9C%AC-8-%E5%89%AF%E6%9C%AC/
 https://www.onechip.net/2023/02/20/hh-%E5%89%AF%E6%9C%AC-7-%E5%89%AF%E6%9C%AC/
@@ -20,8 +21,8 @@ https://www.onechip.net/movies/index.html
 https://www.onechip.net/music/index.html
 https://www.onechip.net/
 https://www.onechip.net/tags/Makefile/
-https://www.onechip.net/tags/Linux%E9%A9%B1%E5%8A%A8/
 https://www.onechip.net/tags/Linux%E5%BA%94%E7%94%A8/
+https://www.onechip.net/tags/Linux%E9%A9%B1%E5%8A%A8/
 https://www.onechip.net/categories/Linux%E9%A9%B1%E5%8A%A8/
 https://www.onechip.net/categories/Linux%E5%BA%94%E7%94%A8/
 https://www.onechip.net/categories/Linux%E9%A9%B1%E5%8A%A8/Makefile/
