@@ -33,34 +33,7 @@
       <link href="/2023/02/20/LCD-test/"/>
       <url>/2023/02/20/LCD-test/</url>
       
-        <content type="html"><![CDATA[<h3 id="1-应用工程师眼里看到的LCD"><a href="#1-应用工程师眼里看到的LCD" class="headerlink" title="1. 应用工程师眼里看到的LCD"></a>1. 应用工程师眼里看到的LCD</h3><p>要想看博客看到图片，图片的目录必须和文章名相同</p><p>命令窗口输入ipconfig／flushdns回车 刷新DNS缓存可以解决阿里云dns状态异常</p><p>我们在执行“<a href="https://so.csdn.net/so/search?q=hexo&spm=1001.2101.3001.7020">hexo</a> d”，部署到git仓库时，发现之前设置的自定义域名失效，恢复为默认域名（仓库名），每次更新部署都需要重新设置。解决办法：_contig.yml”配置文件找到“url”，确认此处域名，为之前设置的自定义域名</p><p>“同时在source目录添加CNAME里面写上我们的域名就行了嘻嘻！</p><p><a href="https://zhuanlan.zhihu.com/p/542101567">https://zhuanlan.zhihu.com/p/542101567</a></p><p>LCD由一个一个像素组成：每行有xres个像素，有yres行，它的分辨率是：xres * yres。</p><p><img src="001_lcd_pixels.png" alt="LCD"></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Linux驱动 </category>
-          
-          <category> Makefile </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Makefile </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Makefile实例</title>
-      <link href="/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/"/>
-      <url>/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/</url>
-      
-        <content type="html"><![CDATA[<h3 id="1-工程师眼里看到的Makefile"><a href="#1-工程师眼里看到的Makefile" class="headerlink" title="1. 工程师眼里看到的Makefile"></a>1. 工程师眼里看到的Makefile</h3>]]></content>
+        <content type="html"><![CDATA[<h1 id="1-应用工程师眼里看到的LCD"><a href="#1-应用工程师眼里看到的LCD" class="headerlink" title="1. 应用工程师眼里看到的LCD"></a>1. 应用工程师眼里看到的LCD</h1><p>要想看博客看到图片，图片的目录必须和文章名相同</p><p>命令窗口输入ipconfig／flushdns回车 刷新DNS缓存可以解决阿里云dns状态异常</p><p>我们在执行“<a href="https://so.csdn.net/so/search?q=hexo&spm=1001.2101.3001.7020">hexo</a> d”，部署到git仓库时，发现之前设置的自定义域名失效，恢复为默认域名（仓库名），每次更新部署都需要重新设置。解决办法：_contig.yml”配置文件找到“url”，确认此处域名，为之前设置的自定义域名</p><p>“同时在source目录添加CNAME里面写上我们的域名就行了嘻嘻！</p><p><a href="https://zhuanlan.zhihu.com/p/542101567">https://zhuanlan.zhihu.com/p/542101567</a></p><p>LCD由一个一个像素组成：每行有xres个像素，有yres行，它的分辨率是：xres * yres。</p><p><img src="001_lcd_pixels.png" alt="LCD"></p><h2 id="1-驱动工程师眼里看到的LCD"><a href="#1-驱动工程师眼里看到的LCD" class="headerlink" title="1. 驱动工程师眼里看到的LCD"></a>1. 驱动工程师眼里看到的LCD</h2><h3 id="1-驱动工程师眼里看到的LCD-1"><a href="#1-驱动工程师眼里看到的LCD-1" class="headerlink" title="1. 驱动工程师眼里看到的LCD"></a>1. 驱动工程师眼里看到的LCD</h3>]]></content>
       
       
       <categories>
@@ -108,23 +81,25 @@
     
     
     <entry>
-      <title>测试3</title>
-      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-3/"/>
-      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-3/</url>
+      <title>Makefile实例</title>
+      <link href="/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/"/>
+      <url>/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h3 id="1-工程师眼里看到的Makefile"><a href="#1-工程师眼里看到的Makefile" class="headerlink" title="1. 工程师眼里看到的Makefile"></a>1. 工程师眼里看到的Makefile</h3>]]></content>
       
       
       <categories>
           
           <category> Linux驱动 </category>
           
+          <category> Makefile </category>
+          
       </categories>
       
       
         <tags>
             
-            <tag> Linux驱动 </tag>
+            <tag> Makefile </tag>
             
         </tags>
       
@@ -133,9 +108,9 @@
     
     
     <entry>
-      <title>测试4</title>
-      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-4/"/>
-      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-4/</url>
+      <title>测试3</title>
+      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-3/"/>
+      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-3/</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -183,9 +158,34 @@
     
     
     <entry>
-      <title>测试6</title>
-      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-6/"/>
-      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-6/</url>
+      <title>测试4</title>
+      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-4/"/>
+      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-4/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux驱动 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux驱动 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>测试asdf</title>
+      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-7-%E5%89%AF%E6%9C%AC/"/>
+      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-7-%E5%89%AF%E6%9C%AC/</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -233,9 +233,9 @@
     
     
     <entry>
-      <title>测试asdf</title>
-      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-7-%E5%89%AF%E6%9C%AC/"/>
-      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-7-%E5%89%AF%E6%9C%AC/</url>
+      <title>测试6</title>
+      <link href="/2023/02/20/hh-%E5%89%AF%E6%9C%AC-6/"/>
+      <url>/2023/02/20/hh-%E5%89%AF%E6%9C%AC-6/</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -308,9 +308,9 @@
     
     
     <entry>
-      <title>测试1</title>
-      <link href="/2023/02/20/hh/"/>
-      <url>/2023/02/20/hh/</url>
+      <title>同步与互斥</title>
+      <link href="/2023/02/20/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/"/>
+      <url>/2023/02/20/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -333,9 +333,9 @@
     
     
     <entry>
-      <title>同步与互斥</title>
-      <link href="/2023/02/20/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/"/>
-      <url>/2023/02/20/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/</url>
+      <title>测试1</title>
+      <link href="/2023/02/20/hh/"/>
+      <url>/2023/02/20/hh/</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -386,11 +386,11 @@
     
     
     <entry>
-      <title>关于</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
+      <title>link</title>
+      <link href="/link/index.html"/>
+      <url>/link/index.html</url>
       
-        <content type="html"><![CDATA[<p>路虽远行则将至，事虽难做则必成！</p>]]></content>
+        <content type="html"><![CDATA[]]></content>
       
     </entry>
     
@@ -419,6 +419,17 @@
     
     
     <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>music</title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
@@ -430,22 +441,11 @@
     
     
     <entry>
-      <title>link</title>
-      <link href="/link/index.html"/>
-      <url>/link/index.html</url>
+      <title>关于</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
       
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>路虽远行则将至，事虽难做则必成！</p>]]></content>
       
     </entry>
     
