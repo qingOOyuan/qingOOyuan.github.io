@@ -101,13 +101,6 @@
 
   
   <url>
-    <loc>https://www.onechip.net/tags/Linux%E5%BA%94%E7%94%A8/</loc>
-    <lastmod>2023-02-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.onechip.net/tags/Makefile/</loc>
     <lastmod>2023-02-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -115,7 +108,7 @@
   </url>
   
   <url>
-    <loc>https://www.onechip.net/tags/linux%E9%A9%B1%E5%8A%A8/</loc>
+    <loc>https://www.onechip.net/tags/Linux%E5%BA%94%E7%94%A8/</loc>
     <lastmod>2023-02-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -128,17 +121,24 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://www.onechip.net/tags/linux%E9%A9%B1%E5%8A%A8/</loc>
+    <lastmod>2023-02-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
   <url>
-    <loc>https://www.onechip.net/categories/Linux%E5%BA%94%E7%94%A8/</loc>
+    <loc>https://www.onechip.net/categories/Linux%E9%A9%B1%E5%8A%A8/</loc>
     <lastmod>2023-02-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.onechip.net/categories/Linux%E9%A9%B1%E5%8A%A8/</loc>
+    <loc>https://www.onechip.net/categories/Linux%E5%BA%94%E7%94%A8/</loc>
     <lastmod>2023-02-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
