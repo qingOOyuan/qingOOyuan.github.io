@@ -9,10 +9,10 @@ https://www.onechip.net/categories/index.html
 https://www.onechip.net/movies/index.html
 https://www.onechip.net/music/index.html
 https://www.onechip.net/
-https://www.onechip.net/tags/Linux%E5%BA%94%E7%94%A8/
 https://www.onechip.net/tags/uboot/
+https://www.onechip.net/tags/Linux%E5%BA%94%E7%94%A8/
 https://www.onechip.net/tags/Linux%E9%A9%B1%E5%8A%A8/
 https://www.onechip.net/tags/linux%E9%A9%B1%E5%8A%A8/
-https://www.onechip.net/categories/Linux%E5%BA%94%E7%94%A8/
 https://www.onechip.net/categories/uboot/
+https://www.onechip.net/categories/Linux%E5%BA%94%E7%94%A8/
 https://www.onechip.net/categories/Linux%E9%A9%B1%E5%8A%A8/
