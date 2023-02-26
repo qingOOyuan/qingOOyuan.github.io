@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>uboot情景分析</title>
+      <link href="/2023/02/26/uboot%E6%83%85%E6%99%AF%E5%88%86%E6%9E%90/"/>
+      <url>/2023/02/26/uboot%E6%83%85%E6%99%AF%E5%88%86%E6%9E%90/</url>
+      
+        <content type="html"><![CDATA[<h1 id="uboot之spl为何物"><a href="#uboot之spl为何物" class="headerlink" title="uboot之spl为何物"></a>uboot之spl为何物</h1><h2 id="1-SPL-名字由来"><a href="#1-SPL-名字由来" class="headerlink" title="1. SPL 名字由来"></a>1. SPL 名字由来</h2><p>SPL 全称叫做：Secondary Program Loader，看名字，像是一个什么二级加载相关的；实质上，也是二级加载；众所周知，u-boot 是用来 boot 我们的嵌入式系统的，那直接使用 u-boot 就行了呗，为何还会多出一个 uboot spl 呢？那我们从系统启动开始说起吧；</p><p>站在芯片厂商的角度来说，硬件系统一上电，一定是要去某个地址取指令（一般是 0x00000000），然后软件便开始很欢快的运行起来了；通常来讲，SoC 厂家都会做一个 ROM 在 SoC 内部，这个 ROM 很小(成本，你懂的)，里面固化了上电启动的代码（一经固化，永不能改，是芯片做的时候，做进去的）；这部分代码呢，我们管它叫做 BootROM。</p><p>换句话来说，上电后，先接管系统的是 SoC 厂家的 BootROM，他要做些什么事情呢？<br>他要负责最原始的初始化，这个 BootROM 叫做一级启动程序，而排在后面的就叫二级启动，这就是 SPL 名字的由来；</p><h2 id="2-SPL-拿来干嘛"><a href="#2-SPL-拿来干嘛" class="headerlink" title="2. SPL 拿来干嘛"></a>2. SPL 拿来干嘛</h2><h3 id="2-1-铺垫"><a href="#2-1-铺垫" class="headerlink" title="2.1 铺垫"></a>2.1 铺垫</h3><p>为了讲清楚 spl 的用处，我需要先铺垫一点其他东西；如果是大芯片（不是单片机），外挂了存储设备（eMMC、Nand、SDCard 等）和内存 RAM（SDRAM、DDR 等），通常情况下呢，我们要让系统跑起来，需要先烧写代码，这个烧写代码，其实是将可执行的二进制文件写到外部的存储设备上（eMMC、Nand、SD Card 等）；系统上电启动的时候呢，去把他们读到内存中去执行；</p><p>前面我们说了，上电后，先执行SoC 厂家自己的 BootROM，其他可执行的程序（u-boot、Kernel）都放（烧写）到了外部存储器上；那么BootROM 的代码除了去初始化硬件环境以外，还需要去外部存储器上面，将接下来可执行的程序读到内存来执行；</p><p>既然是读到内存执行，那么这个内存可以不可以是我们板载的 DDR 呢？理论上是可以的，但是，SoC 厂家设计的 DDR 控制器一般会支持很多种类型的 DDR 设备，并且会提供兼容性列表，<br>SoC 厂家怎么可能知道用户 PCB 上到底用了哪种内存呢？所以，直接把外部可执行程序读到 DDR 显然是不太友好的，一般来说，SoC 都会做一个内部的小容量的 SRAM （又是成本），BootROM 将外部的可执行程序从存储器中读出来，放到 内部SRAM 去执行；</p><p>好了，现在我们引出了 SRAM，引出了 BootROM；那么 BootROM 从具体哪个存储器读出二进制文件呢？SoC 厂家一般会支持多种启动方式，比如从 eMMC 读取，从 SDCard 读取，从 Nand Flash 读取等等；上电的时候，需要告诉它，它需要从什么样的外设来读取后面的启动二进制文件；</p><p>一般的设计思路是，做一组 Bootstrap Pin，上电的时候呢？BootROM 去采集这几个 IO 的电平，来确认要从什么样的外部存储器来加载后续的可执行文件；比如，2 个 IO，2’b00 表示从 Nand 启动，2’b01 表示从 eMMC 启动，2’b10 表示从 SDCard 启动等等；</p><p>当 BootROM 读到这些值后，就会去初始化对应的外设，然后来读取后面要执行的代码；这些 IO 一般来说，会做成板载的拨码开关，用于调整芯片的启动方式；这里，多说一句，读取烧写的二进制的时候呢，需要注意一些细节，比如，SoC 厂家告诉你，你需要先把 SDCard 初始化称为某种文件系统，然后把东西放进去才有效，之类的；因为文件系统是组织文件的方式，并不是裸分区；你按照 A 文件系统的方式放进去，然后 SoC 的 BootROM 也按照 A 文件系统的方式读出来，才能够达成一致；</p><h3 id="2-2-SPL具体作用"><a href="#2-2-SPL具体作用" class="headerlink" title="2.2 SPL具体作用"></a>2.2 SPL具体作用</h3><p>铺垫得够多的了，这里我们回归主题：spl；前面说了，BootROM 会根据 Bootstrap Pin 去确定从某个存储器来读可执行的二进制文件到 SRAM 并执行；理论上来说，这个二进制文件就可以是我们的 u-boot.bin 文件了；也就是 BootROM 直接加载 u-boot.bin；</p><p>但是这里有一个问题，就是 SRAM 很贵，一般来说，SoC 的片上 SRAM 都不会太大，一般 4KB、8KB、16KB…256KB不等；但是呢，u-boot 编译出来却很大，好几百KB，放不下！</p><p>放不下怎么办？比如，我们的 u-boot 有 300KB，SRAM 有 8KB，外部 DDR 1GB，有两种办法：</p><ol><li>做一个小一点的 boot 程序，先让 BootROM 加载这个小的程序，后面再由这个小 boot 去加载 u-boot；这个小的 boot 就叫做 spl，它很小很小（小于SRAM大小），它先被 BootROM 加载到 SRAM 运行，那么这个 spl 要做什么事情呢？最主要的就是要初始化 DDR Controller，然后将真正的大 u-boot 从外部存储器读取到 DDR 中，然后跳转到大 u-boot；</li><li>放不下就放不下呗，BootROM 加载多少算多少，但是这部分uboot要完成初始化DDR，并把完整的uboot搬运到DDR去运行；u-boot 的前面 8K 被加载进入 SRAM 执行，u-boot 被截断，我们就需要保证在 u-boot 的前 8KB 代码，把板载的 DDR 初始化好，把整个 u-boot 拷贝到 DDR，然后跳转到 DDR 执行；</li></ol><p>方案一：SPL流程如下：先假设，我们的“货”，都已经放置到了外部存储器上，也就是绿色部分；</p><p><img src="1_SPL.jpg" alt="1_SPL"></p><ol start="0"><li>上电后BootROM 执行最原始的初始化，根据 Bootstrap Pin 来确定启动设备，初始化外设；</li><li>从存储器读取 SPL；<br>—————- 以上部分是 SoC 厂家的事情，下面是用户要做的事情 —————-</li><li>SPL 被读到内部 SRAM 执行，此刻，控制权以及移交到我们的 SPL 了；</li><li>SPL 初始化外部 DDR；</li><li>SPL 使用从外部存储器读取 u-boot 并放到 DDR；</li><li>跳转到 DDR 中的 u-boot 执行；</li><li>加载内核；</li></ol><p>方案二：可能会涉及两次重定向；</p><p>第一次：</p><ol><li>第一次在lowlevel_init返回后，进入board_init_f函数之前，lowlevel_init设置好了时钟和ddr，为uboot的第一次重定位做好准备。我们的bootrom只拷贝了uboot的前几k代码到sram执行，而大部分uboot的代码还在SD卡中没有载入内存，没有载入sram的原因是之前我们使用的是内部SRAM，容量不足以放下整个uboot，而现在已经初始化好了外部DRAM，拥有了512MB内存，是完完全全够放下整个uboot，所以这里的第一次重定位就是将SD卡中完整的uboot.bin载入到ddr中(链接地址处)，然后绝对跳转到ddr中board_init_f函数去运行。</li><li>在重定位到链接地址之前的代码只能用位置无关码，也就是相对跳转，不能绝对跳转，因为绝对跳转是跳到链接地址上，但是重定位之前链接地址处那里我们还没有放代码呢。</li><li>重定位到DDR链接地址并跳转到board_init_f后，就可以使用函数指针等全局的变量了(board_init_f中使用了函数指针数组完成一系列初始化)；注意这里不是跳到DDR中uboot开始地址。</li></ol><p>第二次：</p><ol><li>第二次在board_init_f函数最后会调用汇编实现的ENTRY(relocate_code)，在前面第一次重定位将u-boot从SD卡拷贝到DDR中时，是拷贝到链接地址的，也就是说那个时候u-boot的运行地址就和链接地址一致了，可以正常运行完整个u-boot，这里又再次重定位，只不过是为了将u-boot搬到内存的高地址去运行，是因为防止内核解压的时候覆盖了u-boot本身。</li><li>但是要注意，如果这次像第一次那样将uboot复制到DDR高地址，然后绝对跳转过去执行，后续函数中如果有函数调用或使用全局变量的时候，还是会回到链接地址处，也就是DDR低地址处的uboot，这就与我们本意相悖，所以relocate_code最后还要修改DDR高地址的uboot.bin的rel段的数据，那是所有需要重定位的变量、函数的地址信息，加上DDR低地址到DDR高地址的偏移量即可。</li><li>relocate_code结束后使用绝对地址跳转到DDR高地址处的uboot.bin的board_init_r函数入口，也就是在DDR高地址继续执行Uboot，注意这里不是跳到DDR中高地址uboot的开始地址。第二次重定位也称自举，形象的说就是把自己举高高。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> uboot </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> uboot </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>代码重定位</title>
       <link href="/2023/02/23/%E4%BB%A3%E7%A0%81%E9%87%8D%E5%AE%9A%E4%BD%8D/"/>
       <url>/2023/02/23/%E4%BB%A3%E7%A0%81%E9%87%8D%E5%AE%9A%E4%BD%8D/</url>
@@ -21,33 +46,6 @@
         <tags>
             
             <tag> linux驱动 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Makefile实例</title>
-      <link href="/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/"/>
-      <url>/2023/02/20/Makefile%E5%AE%9E%E4%BE%8B/</url>
-      
-        <content type="html"><![CDATA[<h3 id="1-工程师眼里看到的Makefile"><a href="#1-工程师眼里看到的Makefile" class="headerlink" title="1. 工程师眼里看到的Makefile"></a>1. 工程师眼里看到的Makefile</h3>]]></content>
-      
-      
-      <categories>
-          
-          <category> Linux驱动 </category>
-          
-          <category> Makefile </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> Makefile </tag>
             
         </tags>
       
@@ -109,17 +107,6 @@
     
     
     <entry>
-      <title>分类</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>关于</title>
       <link href="/about/index.html"/>
       <url>/about/index.html</url>
@@ -131,9 +118,9 @@
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
+      <title>分类</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -145,6 +132,17 @@
       <title>link</title>
       <link href="/link/index.html"/>
       <url>/link/index.html</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
