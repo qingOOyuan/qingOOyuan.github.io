@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.onechip.net/2023/02/27/uboot%E6%83%85%E6%99%AF%E5%88%86%E6%9E%90%E4%B9%8B%E7%BC%96%E8%AF%91-2/</loc>
+    
+    <lastmod>2023-02-27</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.onechip.net/2023/02/26/uboot%E6%83%85%E6%99%AF%E5%88%86%E6%9E%90%E4%B9%8BSPL-1/</loc>
     
     <lastmod>2023-02-26</lastmod>
@@ -94,7 +103,7 @@
 
   <url>
     <loc>https://www.onechip.net/</loc>
-    <lastmod>2023-02-26</lastmod>
+    <lastmod>2023-02-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -102,28 +111,28 @@
   
   <url>
     <loc>https://www.onechip.net/tags/Linux%E5%BA%94%E7%94%A8/</loc>
-    <lastmod>2023-02-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.onechip.net/tags/Linux%E9%A9%B1%E5%8A%A8/</loc>
-    <lastmod>2023-02-26</lastmod>
+    <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.onechip.net/tags/uboot/</loc>
-    <lastmod>2023-02-26</lastmod>
+    <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.onechip.net/tags/linux%E9%A9%B1%E5%8A%A8/</loc>
-    <lastmod>2023-02-26</lastmod>
+    <lastmod>2023-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.onechip.net/tags/Linux%E9%A9%B1%E5%8A%A8/</loc>
+    <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -132,21 +141,21 @@
   
   <url>
     <loc>https://www.onechip.net/categories/Linux%E5%BA%94%E7%94%A8/</loc>
-    <lastmod>2023-02-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.onechip.net/categories/Linux%E9%A9%B1%E5%8A%A8/</loc>
-    <lastmod>2023-02-26</lastmod>
+    <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://www.onechip.net/categories/uboot/</loc>
-    <lastmod>2023-02-26</lastmod>
+    <lastmod>2023-02-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.onechip.net/categories/Linux%E9%A9%B1%E5%8A%A8/</loc>
+    <lastmod>2023-02-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
