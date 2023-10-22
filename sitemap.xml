@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.onechip.net/2023/10/17/Pinctrl%E5%AD%90%E7%B3%BB%E7%BB%9F/</loc>
+    
+    <lastmod>2023-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://www.onechip.net/2023/10/21/GPIO%E5%AD%90%E7%B3%BB%E7%BB%9F/</loc>
     
     <lastmod>2023-10-22</lastmod>
@@ -59,15 +68,6 @@
     <loc>https://www.onechip.net/2023/04/11/RK3399%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97/</loc>
     
     <lastmod>2023-10-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.onechip.net/2023/10/17/Pinctrl%E5%AD%90%E7%B3%BB%E7%BB%9F/</loc>
-    
-    <lastmod>2023-10-19</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -228,13 +228,6 @@
   </url>
   
   <url>
-    <loc>https://www.onechip.net/tags/%E9%9D%A2%E8%AF%95/</loc>
-    <lastmod>2023-10-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.onechip.net/tags/C%E8%AF%AD%E8%A8%80/</loc>
     <lastmod>2023-10-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -243,6 +236,13 @@
   
   <url>
     <loc>https://www.onechip.net/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2023-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.onechip.net/tags/%E9%9D%A2%E8%AF%95/</loc>
     <lastmod>2023-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -279,13 +279,6 @@
   </url>
   
   <url>
-    <loc>https://www.onechip.net/categories/%E9%9D%A2%E8%AF%95/</loc>
-    <lastmod>2023-10-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.onechip.net/categories/C%E8%AF%AD%E8%A8%80/</loc>
     <lastmod>2023-10-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -294,6 +287,13 @@
   
   <url>
     <loc>https://www.onechip.net/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2023-10-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.onechip.net/categories/%E9%9D%A2%E8%AF%95/</loc>
     <lastmod>2023-10-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
