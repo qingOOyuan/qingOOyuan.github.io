@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>mmc子系统 | 技术成就梦想</title><meta name="author" content="小青青嘞"><meta name="copyright" content="小青青嘞"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Linux kernel把mmc、sd以及sdio三者的驱动代码整合在一起，俗称mmc子系统。源码位于drivers&#x2F;mmc下。其下有三个子目录，分别是：card、core、host，其中，card用于构建一个块设备作为上层与mmc子系统沟通的桥梁；core抽象了mmc、sd、sdio三者的通用操作；host则是各类平台上的host驱动代码，包括如TI Omap的omap_hsmmc，三">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mmc子系统">
+<meta property="og:url" content="https://www.onechip.net/2022/04/10/mmc%E5%AD%90%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="技术成就梦想">
+<meta property="og:description" content="Linux kernel把mmc、sd以及sdio三者的驱动代码整合在一起，俗称mmc子系统。源码位于drivers&#x2F;mmc下。其下有三个子目录，分别是：card、core、host，其中，card用于构建一个块设备作为上层与mmc子系统沟通的桥梁；core抽象了mmc、sd、sdio三者的通用操作；host则是各类平台上的host驱动代码，包括如TI Omap的omap_hsmmc，三">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.onechip.net/file_img/mmc%E5%AD%90%E7%B3%BB%E7%BB%9F.png">
+<meta property="article:published_time" content="2022-04-10T09:20:00.000Z">
+<meta property="article:modified_time" content="2023-04-09T08:03:45.305Z">
+<meta property="article:author" content="小青青嘞">
+<meta property="article:tag" content="Linux驱动">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.onechip.net/file_img/mmc%E5%AD%90%E7%B3%BB%E7%BB%9F.png"><link rel="shortcut icon" href="/img/avatar.png"><link rel="canonical" href="https://www.onechip.net/2022/04/10/mmc%E5%AD%90%E7%B3%BB%E7%BB%9F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'mmc子系统',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-09 16:03:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/true" data-lazy-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/sitemap.xml"><i class="fa-fw sitemap"></i><span> sitemap</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="技术成就梦想"><span class="site-name">技术成就梦想</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/sitemap.xml"><i class="fa-fw sitemap"></i><span> sitemap</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">mmc子系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-10T09:20:00.000Z" title="发表于 2022-04-10 17:20:00">2022-04-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-09T08:03:45.305Z" title="更新于 2023-04-09 16:03:45">2023-04-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Linux%E9%A9%B1%E5%8A%A8/">Linux驱动</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="mmc子系统"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div><article class="post-content" id="article-container"><p>Linux kernel把mmc、sd以及sdio三者的驱动代码整合在一起，俗称mmc子系统。源码位于drivers&#x2F;mmc下。其下有三个子目录，分别是：card、core、host，其中，card用于构建一个块设备作为上层与mmc子系统沟通的桥梁；core抽象了mmc、sd、sdio三者的通用操作；host则是各类平台上的host驱动代码，包括如TI Omap的omap_hsmmc，三星的s3cmci等。具体的SOC，会根据实际情况再次封装(比如rockchip采用新思designwave的IP)，就重新封装为struct dw_mci。DesignWare是SoC&#x2F;ASIC设计者最钟爱的设计IP库和验证IP库。它包括一个独立于工艺的、经验证的、可综合的虚拟微架构的元件集合，包括逻辑、算术、存储和专用元件系列，超过140个模块。</p>
+<h1 id="一、mmc子系统涉及总线-SD为例"><a href="#一、mmc子系统涉及总线-SD为例" class="headerlink" title="一、mmc子系统涉及总线(SD为例)"></a>一、mmc子系统涉及总线(SD为例)</h1><h2 id="1-1-整体框架"><a href="#1-1-整体框架" class="headerlink" title="1.1 整体框架"></a>1.1 整体框架</h2><p>①Host驱动相应的driver和device挂载在Linux内核内置的虚拟抽象总线platform_bus_type。设备树指定compatible属性与源码匹配后调用对应的probe函数来初始化对应平台的host硬件。</p>
+<p>②Card驱动相应的driver和device挂载在mmc自己创建的虚拟总线mmc_bus_type下。该总线的结构体定义在driver&#x2F;mmc&#x2F;core&#x2F;bus.c；因为是统一的协议，mmc_driver在内核已经写好并已注册：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver/mmc/card/block.c</span><br><span class="line">--&gt;mmc_blk_init()</span><br><span class="line">	--&gt;mmc_register_driver(&amp;mmc_driver)；</span><br></pre></td></tr></table></figure>
+
+<p>③SD卡中extended CSD寄存器中存储分区信息，上电检测到了SD卡，或者上电之后的热拔插操作，触发mmc_rescan查找检测到SD卡插入后，会通过读取该寄存器的值，获取mmc card的分区信息等，然后注册对应的mmc_card device，因mmc driver仅有一个，因此针对mmc bus而言其match函数直接返回1，表示匹配成功(因为是统一的协议)，而不需要像spi&#x2F;i2c总线的match接口那样对设备和驱动进行匹配检测；随后调用mmc_driver的probe函数（拔出卡则反之操作）。</p>
+<p>④mmc_driver的probe函数针对该mmc card的每一个分区，均执行如下操作：</p>
+<ol>
+<li>为每一个分区，创建对应的通用磁盘设备gendisk；</li>
+<li>设置gendisk的fops为mmc_bdops；</li>
+<li>为每一个通用磁盘设备，均创建request_queue及其处理方法；</li>
+<li>为该通用磁盘设备创建mmc block块i&#x2F;o请求机制；</li>
+<li>将该分区的通用磁盘设备注册至块设备i&#x2F;o，以便应用层可通过块设备访问该mmc card 分区；</li>
+</ol>
+<h2 id="1-2-设备-总线-驱动模型"><a href="#1-2-设备-总线-驱动模型" class="headerlink" title="1.2 设备-总线-驱动模型"></a>1.2 设备-总线-驱动模型</h2><p>在分析MMC子系统的设备-总线-驱动模型时，可以借助已经分析的i2c驱动模型、spi驱动模型的实现，来学习mmc子系统的驱动模型，通过与i2c驱动模型、spi驱动模型的对比，也可以加深我们对mmc子系统驱动模型的理解（从已知去学习未知，可提供我们的学习效率）。</p>
+<p>我们知道针对复杂的设备，则需要借助控制器进行通信，而针对i2c、spi、mmc而言，均需要对应的控制器实现与该类设备的通信。而针对这三类控制器，其模块都进行了抽象。</p>
+<p>i2c控制器抽象为i2c adapter、spi控制器抽象为spi master，而针对mmc控制器，则抽象为mmc host；而针对这三种类型设备的抽象，i2c设备抽象为i2c client、spi设备抽象为spi device、mmc device抽象为mmc card。</p>
+<h2 id="1-3-三类驱动模型的异同"><a href="#1-3-三类驱动模型的异同" class="headerlink" title="1.3 三类驱动模型的异同"></a>1.3 三类驱动模型的异同</h2><p>①均为控制器创建了对应的class，用于将对应的控制器设备链接至对应的class上</p>
+<p>②针对i2c adapter、spi master这两类而言，其驱动模型中均创建了对应的链表，将所有注册的控制器设备链接在一起，而mmc子系统并没有为mmc host创建类似的链表；</p>
+<p>③I2c&#x2F;spi设备不属于热插拔设备，因此在具体系统的板级文件或者设备树中，需要针对系统中存在的i2c&#x2F;spi设备定义注册信息，从而在LINUX系统初始化时完成i2c&#x2F;spi设备的注册；而针对mmc子系统其属于热插拔的，因此在系统初始化时不需要单独进行设备的注册；</p>
+<p>④针对mmc子系统而言，针对mmc card的注册，mmc子系统提供了rescan接口，而该接口作为延迟工作队列的回调函数。针对mmc card而发起rescan扫描的时机如下：</p>
+<ol>
+<li>在mmc host添加的时候，执行一次mmc card的扫描操作。</li>
+<li>热拔插过程执行扫描。</li>
+</ol>
+<p><em><strong>这里大概分三个情况来描述热插拔识别流程：</strong></em></p>
+<ol>
+<li>SOC带卡检测引脚，即mmc控制器部分带专门的中断寄存器位（MCI中断）</li>
+<li>SOC不带卡检测引脚，即用普通中断引脚做检测（即sdmmc_cd引脚）</li>
+<li>没有专门的寄存器，也没有用cd的gpio中断，采用轮询POLL</li>
+</ol>
+<h1 id="二、mmc子系统函数调用流程-SD为例"><a href="#二、mmc子系统函数调用流程-SD为例" class="headerlink" title="二、mmc子系统函数调用流程(SD为例)"></a>二、mmc子系统函数调用流程(SD为例)</h1><h2 id="2-1-设备树mmc节点"><a href="#2-1-设备树mmc节点" class="headerlink" title="2.1 设备树mmc节点"></a>2.1 设备树mmc节点</h2><p>关于SD卡的HOST最初始设备树节点在rk3399.dtsi</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">sdmmc:</span> <span class="title class_">dwmmc@fe320000</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;rockchip,rk3399-dw-mshc&quot;</span>,</span><br><span class="line">					 <span class="string">&quot;rockchip,rk3288-dw-mshc&quot;</span><span class="punctuation">;</span></span><br><span class="line">					 ............................</span><br><span class="line">		<span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-2-Host驱动流程"><a href="#2-2-Host驱动流程" class="headerlink" title="2.2 Host驱动流程"></a>2.2 Host驱动流程</h2><p>Host驱动相应的driver和device挂载在Linux内核内置的虚拟抽象总线platform_bus_type。我们设备树host device与driver匹配后调用对应的probe函数来初始化对应平台的host硬件。 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">drivers\mmc\host\dw_mmc-rockchip.c</span><br><span class="line"><span class="title function_">dw_mci_rockchip_probe</span><span class="params">(<span class="keyword">struct</span> platform_device *pdev)</span></span><br><span class="line">	--&gt; <span class="title function_">dw_mci_pltfm_register</span><span class="params">(pdev, drv_data)</span>; <span class="comment">//解析设备树信息，用来构造一个dw_mci *host；</span></span><br><span class="line">		--&gt; dw_mci_probe(dw_mci *host); <span class="comment">//将上面构造好的dw_mci *host结构体传参进来；</span></span><br><span class="line">			--&gt; setup_timer(&amp;host-&gt;cmd11_timer,dw_mci_cmd11_timer, (<span class="type">unsigned</span> <span class="type">long</span>)host); <span class="comment">//设置一些定时器，定时发送一些命令</span></span><br><span class="line">			--&gt; host-&gt;dma_ops = host-&gt;pdata-&gt;dma_ops;</span><br><span class="line">			--&gt; ret = devm_request_irq(host-&gt;dev, host-&gt;irq, dw_mci_interrupt, host-&gt;irq_flags, <span class="string">&quot;dw-mci&quot;</span>, host);</span><br><span class="line">			<span class="comment">//这个dw_mci_interrupt中断函数会被注册两次，一次是emmc(irq=25)，一次是sd卡(irq=26),所以源码虽然只注册了一次,但是实际上注册了两次，用的都是同一个中断处理函数</span></span><br><span class="line">			<span class="comment">//这个是mci寄存器的中断，我们的这款soc可以根据这个寄存器来判断发送，接收，SD卡热拔插的行为，都会触发这个中断，在这个中断处理函数里面再细分是什么操作触发的中断，进行处理，比如热拔插：</span></span><br><span class="line">			--&gt; dw_mci_init_slot(dw_mci *host, i); <span class="comment">// 定义了mmc_host *mmc;，用我们封装了一层的dw_mci *host去填充注册他</span></span><br><span class="line">				--&gt; mmc = mmc_alloc_host(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> dw_mci_slot), host-&gt;dev);</span><br><span class="line">					--&gt; INIT_DELAYED_WORK(&amp;host-&gt;detect, mmc_rescan); <span class="comment">//初始化工作队列，里面有扫描SD卡的函数</span></span><br><span class="line">				--&gt; mmc-&gt;ops = &amp;dw_mci_ops; <span class="comment">//mmc_host_ops类型的变量，用于定义本mmc_host的操作接口(包括与mmc card通信的接口request、卡检测相关的接口等)</span></span><br><span class="line">				--&gt; mmc_add_host(mmc);</span><br><span class="line">					--&gt; mmc_start_host(mmc_host *host);</span><br><span class="line">						--&gt; mmc_schedule_delayed_work(&amp;host-&gt;detect, delay); <span class="comment">//上电添加mmc_host的时候，先主动执行一次mmc_rescan函数</span></span><br><span class="line">			--&gt; dw_mci_enable_cd(host); <span class="comment">//cd = card detect ≠ sdmmc_cd 引脚中断，主要看函数内容，像这款soc就是在里面开启mci寄存器的SD卡热拔插中断</span></span><br><span class="line">				--&gt; temp = mci_readl(host, INTMASK); temp  |= SDMMC_INT_CD; mci_writel(host, INTMASK, temp); <span class="comment">//开启mci寄存器的SD卡热拔插中断</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-3-热拔插中断流程"><a href="#2-3-热拔插中断流程" class="headerlink" title="2.3 热拔插中断流程"></a>2.3 热拔插中断流程</h2><p>假设热拔插SD卡引起了中断： </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">dw_mci_interrupt()</span><br><span class="line">	<span class="keyword">if</span> (pending &amp; SDMMC_INT_CD)</span><br><span class="line">		dw_mci_handle_cd(dw_mci *host);</span><br><span class="line">			--&gt; mmc_detect_change(slot-&gt;mmc,msecs_to_jiffies(host-&gt;pdata-&gt;detect_delay_ms));</span><br><span class="line">				--&gt; _mmc_detect_change(host, delay, <span class="literal">true</span>);</span><br><span class="line">					--&gt; mmc_schedule_delayed_work(&amp;host-&gt;detect, delay); <span class="comment">//开启工作队列</span></span><br><span class="line">						--&gt; mmc_rescan() <span class="comment">//最终会调用此函数</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 重点看看mmc_rescan检测SD卡热拔插的函数，我们在设备树中的SD卡定义了 supports-sd 所以：</span></span><br><span class="line">drivers\mmc\core\host.c </span><br><span class="line">mmc_of_parse</span><br><span class="line">	<span class="title function_">if</span> <span class="params">(of_property_read_bool(np, <span class="string">&quot;supports-sd&quot;</span>))</span></span><br><span class="line">		host-&gt;restrict_caps |= RESTRICT_CARD_TYPE_SD; </span><br><span class="line"> </span><br><span class="line">mmc_rescan()</span><br><span class="line">	<span class="keyword">if</span> (host-&gt;bus_ops &amp;&amp; !host-&gt;bus_dead &amp;&amp; !(host-&gt;caps &amp; MMC_CAP_NONREMOVABLE)) <span class="comment">//上电第一次调用这个函数时候，还没有设置host-&gt;bus_ops，所以会执行后面的语句来设置host-&gt;bus_ops</span></span><br><span class="line">		host-&gt;bus_ops-&gt;detect(host);</span><br><span class="line">	--&gt; mmc_rescan_try_freq(host, max(freqs[i], host-&gt;f_min)) <span class="comment">//以各种频率给host发，选择最合适的频率</span></span><br><span class="line">			<span class="keyword">if</span> ((host-&gt;restrict_caps &amp; RESTRICT_CARD_TYPE_SD) &amp;&amp; !mmc_attach_sd(host)) <span class="keyword">return</span> <span class="number">0</span>; 所以就会调用mmc_attach_sd</span><br><span class="line">		--&gt; mmc_attach_sd(host)</span><br><span class="line">			--&gt; mmc_attach_bus(host, &amp;mmc_sd_ops);</span><br><span class="line">				--&gt; host-&gt;bus_ops = ops; <span class="comment">//这里的ops就是上面的mmc_ops参数</span></span><br><span class="line">			--&gt; mmc_sd_init_card(host, rocr, <span class="literal">NULL</span>);</span><br><span class="line">				--&gt; card = mmc_alloc_card(host, &amp;sd_type);</span><br><span class="line">			--&gt; mmc_add_card(host-&gt;card);</span><br><span class="line">				--&gt; device_add(&amp;card-&gt;dev);</span><br><span class="line">					--&gt; bus_add_device(dev); <span class="comment">//Add the device to its bus&#x27;s list of devices, 会给mmc_bus注册一个devices，会和系统自动注册的mmc_driver匹配，调用它的probe函数</span></span><br><span class="line">                        ......</span><br><span class="line">                        --&gt; mmc_driver-&gt;probe</span><br><span class="line">	                        --&gt; mmc_blk_probe() <span class="comment">//如上分析的，会读取SD卡的寄存器获取分区信息，根据分区信息注册block等。</span></span><br></pre></td></tr></table></figure>
+
+<p>放一张图中好看些：</p>
+<p><img src= "/true" data-lazy-src="2.1mmc%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B1.png" alt="2.1mmc子系统函数调用流程1"></p>
+<h1 id="三、mmc-host相关数据结构"><a href="#三、mmc-host相关数据结构" class="headerlink" title="三、mmc_host相关数据结构"></a>三、mmc_host相关数据结构</h1><h2 id="3-1-数据结构关联"><a href="#3-1-数据结构关联" class="headerlink" title="3.1 数据结构关联"></a>3.1 数据结构关联</h2><p><img src= "/true" data-lazy-src="3.1%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%85%B3%E8%81%94.png" alt="3.1数据结构关联"></p>
+<h2 id="3-2-mmc-host"><a href="#3-2-mmc-host" class="headerlink" title="3.2 mmc_host"></a>3.2 mmc_host</h2><p><img src= "/true" data-lazy-src="3.2mmc_host.png" alt="3.2mmc_host"></p>
+<h2 id="3-3-mmc-card"><a href="#3-3-mmc-card" class="headerlink" title="3.3 mmc_card"></a>3.3 mmc_card</h2><p><img src= "/true" data-lazy-src="mmc_card.png" alt="mmc_card"></p>
+<p>mmc_card结构体变量的定义如下，主要内容如下：</p>
+<ol>
+<li>host完成mmc_card与mmc_host的绑定；</li>
+<li>dev完成将该mmc_card与系统中的设备、总线、驱动的关联（即完成与系统设备驱动总线的关联与绑定操作）；</li>
+<li>卡类型与卡状态记录；</li>
+<li>卡相关的寄存器信息记录（主要从mmc card中读取），包括cid、csd、scr、ssr等内容；</li>
+<li>Mmc card的分区信息，主要完成块设备的创建（由mmc driver实现）；</li>
+<li>若为sdio设备，则有cccr、cis等（关于sdio的部分，请参考sdio协议相关的文档）；</li>
+</ol>
+<h2 id="3-4-mmc-ios"><a href="#3-4-mmc-ios" class="headerlink" title="3.4 mmc_ios"></a>3.4 mmc_ios</h2><p><img src= "/true" data-lazy-src="mmc_ios.png" alt="mmc_ios"></p>
+<p>该结构体主要定义mmc总线相关的参数，主要包括时钟频率、电源、总线模式、电源状态、总线带宽、支持的信号电压值等等这些参数的设置可通过mmc_host_ops-&gt;set_ios实现。</p>
+<h2 id="3-5-mmc-host-ops"><a href="#3-5-mmc-host-ops" class="headerlink" title="3.5 mmc_host_ops"></a>3.5 mmc_host_ops</h2><p><img src= "/true" data-lazy-src="mmc_host_ops.png" alt="mmc_host_ops"></p>
+<p>该数据结构定义了mmc_host的操作方法，主要包括如下：</p>
+<ol>
+<li>若mmc_host支持enable、disable，则需要实现这两个接口（可参考mmc_controller的用户手册）；</li>
+<li>pre_req、request、post_req主要定义了mmc controller访问mmc card的方法，mmc controller驱动至少应完成request接口的定义；</li>
+<li>set_ios接口主要用于设置mmc_controller总线相关的参数，mmc_host需要完成该接口的定义；</li>
+<li>get_ro用于获取mmc card 的读写权限，若mmc controller提供检测mmc card读写权限的功能，则需要提供该接口；</li>
+<li>get_cd为卡是否在位的检测接口（该接口非必须），可查看mmc controller的用户手册，确定是否支持；</li>
+<li>init_card为mmc card初始化接口，主要是对mmc card&#x2F;mmc controller一些特定的初始化参数，若没有特殊对待项，该接口不需要处理；</li>
+<li>剩下几个接口大多数驱动也没有实现，这几个接口可参考具体的mmc协议，大多数的mmc host驱动基本上不需要实现；</li>
+</ol>
+<h2 id="3-6-mmc-bus-ops"><a href="#3-6-mmc-bus-ops" class="headerlink" title="3.6 mmc_bus_ops"></a>3.6 mmc_bus_ops</h2><p><img src= "/true" data-lazy-src="mmc_bus_ops.png" alt="mmc_bus_ops"></p>
+<p>该结构主要是针对mmc card的sleep&#x2F;awake的操作，因mmc card也需要进行sleep&#x2F;awake等接口，这些接口类似于设备驱动的电源管理（suspend&#x2F;resume）相关的接口。该结构体中的成员，不需要我们进行实现，mmc子系统已经完成，mmc子系统根据mmc各协议版本针对sleep&#x2F;awake的支持情况，实现对应的操作：</p>
+<ol>
+<li><p>若为mmc 4.3及以上的协议，则支持sleep&#x2F;awake接口；</p>
+</li>
+<li><p>remove接口实现mmc card的移除操作，主要是解除mmc card与mmc host的绑定，并将mmc card从mmc 总线上移除；</p>
+</li>
+<li><p>detect&#x2F;alive主要是卡在位检测以及卡是否移除检测；</p>
+</li>
+<li><p>针对suspend&#x2F;resume接口，针对mmc 不同版本的协议，其功能有所不同：</p>
+<p> 4.1. 若card支持poweroff notify机制，则进入poweroff状态；<br> 4.2. 若card支持sleep状态，则进入sleep状态，针对mmc rev&gt;&#x3D;1.3的情况；<br> 4.3. card不支持以上两种状态，则向card发送deselect命令;</p>
+</li>
+<li><p>power_restore接口，即为mmc_power_restore接口，该接口目前即调用mmc_init_card，根据mmc 协议，完成mmc card的初始化操作。</p>
+</li>
+</ol>
+<p><em><strong>参考这位博主：<a target="_blank" rel="noopener" href="https://jerry-cheng.blog.csdn.net/article/details/104717742">LINUX MMC子系统分析之一 概述jerry_chg的博客-CSDN博客linux mmc子系统</a></strong></em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.onechip.net">小青青嘞</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.onechip.net/2022/04/10/mmc%E5%AD%90%E7%B3%BB%E7%BB%9F/">https://www.onechip.net/2022/04/10/mmc%E5%AD%90%E7%B3%BB%E7%BB%9F/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.onechip.net" target="_blank">技术成就梦想</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux%E9%A9%B1%E5%8A%A8/">Linux驱动</a></div><div class="post_share"><div class="social-share" data-image="/file_img/mmc%E5%AD%90%E7%B3%BB%E7%BB%9F.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/04/20/rockchip%E4%B9%8Bpwm%E9%A9%B1%E5%8A%A8/" title="rockchip之pwm驱动"><img class="cover" src= "/true" data-lazy-src="/file_img/rockchip%E4%B9%8Bpwm%E9%A9%B1%E5%8A%A8.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">rockchip之pwm驱动</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/20/platform%E6%80%BB%E7%BA%BF%E9%A9%B1%E5%8A%A8%E8%AE%BE%E5%A4%87/" title="platform总线驱动设备"><img class="cover" src= "/true" data-lazy-src="/file_img/platform%E6%80%BB%E7%BA%BF%E9%A9%B1%E5%8A%A8%E8%AE%BE%E5%A4%87.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">platform总线驱动设备</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/02/23/%E4%BB%A3%E7%A0%81%E9%87%8D%E5%AE%9A%E4%BD%8D/" title="代码重定位"><img class="cover" src= "/true" data-lazy-src="/file_img/%E4%BB%A3%E7%A0%81%E9%87%8D%E5%AE%9A%E4%BD%8D.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-23</div><div class="title">代码重定位</div></div></a></div><div><a href="/2023/02/20/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5/" title="同步与互斥"><img class="cover" src= "/true" data-lazy-src="/file_img/%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-20</div><div class="title">同步与互斥</div></div></a></div><div><a href="/2021/10/20/platform%E6%80%BB%E7%BA%BF%E9%A9%B1%E5%8A%A8%E8%AE%BE%E5%A4%87/" title="platform总线驱动设备"><img class="cover" src= "/true" data-lazy-src="/file_img/platform%E6%80%BB%E7%BA%BF%E9%A9%B1%E5%8A%A8%E8%AE%BE%E5%A4%87.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-20</div><div class="title">platform总线驱动设备</div></div></a></div><div><a href="/2021/10/15/input%E8%BE%93%E5%85%A5%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="input输入子系统"><img class="cover" src= "/true" data-lazy-src="/file_img/%E8%BE%93%E5%85%A5%E5%AD%90%E7%B3%BB%E7%BB%9F.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-10-15</div><div class="title">input输入子系统</div></div></a></div><div><a href="/2023/10/21/GPIO%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="GPIO子系统"><img class="cover" src= "/true" data-lazy-src="/file_img/GPIO%E5%AD%90%E7%B3%BB%E7%BB%9F.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-21</div><div class="title">GPIO子系统</div></div></a></div><div><a href="/2023/10/17/Pinctrl%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="Pinctrl子系统"><img class="cover" src= "/true" data-lazy-src="/file_img/Pinctrl%E5%AD%90%E7%B3%BB%E7%BB%9F.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-17</div><div class="title">Pinctrl子系统</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/true" data-lazy-src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">小青青嘞</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/qingOOyuan/"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/qingOOyuan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://15007971764@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">路虽远行则将至，事虽难做则必成！<br>扣扣:1002782733<br>微信:15007971764</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81mmc%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%B6%89%E5%8F%8A%E6%80%BB%E7%BA%BF-SD%E4%B8%BA%E4%BE%8B"><span class="toc-text">一、mmc子系统涉及总线(SD为例)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6"><span class="toc-text">1.1 整体框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E8%AE%BE%E5%A4%87-%E6%80%BB%E7%BA%BF-%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.2 设备-总线-驱动模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E4%B8%89%E7%B1%BB%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BC%82%E5%90%8C"><span class="toc-text">1.3 三类驱动模型的异同</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81mmc%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%B5%81%E7%A8%8B-SD%E4%B8%BA%E4%BE%8B"><span class="toc-text">二、mmc子系统函数调用流程(SD为例)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E8%AE%BE%E5%A4%87%E6%A0%91mmc%E8%8A%82%E7%82%B9"><span class="toc-text">2.1 设备树mmc节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Host%E9%A9%B1%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="toc-text">2.2 Host驱动流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E7%83%AD%E6%8B%94%E6%8F%92%E4%B8%AD%E6%96%AD%E6%B5%81%E7%A8%8B"><span class="toc-text">2.3 热拔插中断流程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81mmc-host%E7%9B%B8%E5%85%B3%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">三、mmc_host相关数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%85%B3%E8%81%94"><span class="toc-text">3.1 数据结构关联</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-mmc-host"><span class="toc-text">3.2 mmc_host</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-mmc-card"><span class="toc-text">3.3 mmc_card</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-mmc-ios"><span class="toc-text">3.4 mmc_ios</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-5-mmc-host-ops"><span class="toc-text">3.5 mmc_host_ops</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-6-mmc-bus-ops"><span class="toc-text">3.6 mmc_bus_ops</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/10/21/GPIO%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="GPIO子系统"><img src= "/true" data-lazy-src="/file_img/GPIO%E5%AD%90%E7%B3%BB%E7%BB%9F.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GPIO子系统"/></a><div class="content"><a class="title" href="/2023/10/21/GPIO%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="GPIO子系统">GPIO子系统</a><time datetime="2023-10-21T09:20:00.000Z" title="发表于 2023-10-21 17:20:00">2023-10-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/17/Pinctrl%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="Pinctrl子系统"><img src= "/true" data-lazy-src="/file_img/Pinctrl%E5%AD%90%E7%B3%BB%E7%BB%9F.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Pinctrl子系统"/></a><div class="content"><a class="title" href="/2023/10/17/Pinctrl%E5%AD%90%E7%B3%BB%E7%BB%9F/" title="Pinctrl子系统">Pinctrl子系统</a><time datetime="2023-10-17T09:20:00.000Z" title="发表于 2023-10-17 17:20:00">2023-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/11/RK3399%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97/" title="RK3399使用日志"><img src= "/true" data-lazy-src="/file_img/RK3399%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RK3399使用日志"/></a><div class="content"><a class="title" href="/2023/04/11/RK3399%E4%BD%BF%E7%94%A8%E6%97%A5%E5%BF%97/" title="RK3399使用日志">RK3399使用日志</a><time datetime="2023-04-11T07:20:00.000Z" title="发表于 2023-04-11 15:20:00">2023-04-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/19/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAC%E6%8C%87%E9%92%88/" title="深入浅出C指针"><img src= "/true" data-lazy-src="/file_img/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAC%E6%8C%87%E9%92%88.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入浅出C指针"/></a><div class="content"><a class="title" href="/2023/03/19/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAC%E6%8C%87%E9%92%88/" title="深入浅出C指针">深入浅出C指针</a><time datetime="2023-03-19T09:20:00.000Z" title="发表于 2023-03-19 17:20:00">2023-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/19/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="深入浅出数据结构"><img src= "/true" data-lazy-src="/file_img/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入浅出数据结构"/></a><div class="content"><a class="title" href="/2023/03/19/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="深入浅出数据结构">深入浅出数据结构</a><time datetime="2023-03-19T07:20:00.000Z" title="发表于 2023-03-19 15:20:00">2023-03-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By 小青青嘞</div><div class="footer_custom_text">想每天唱最真的心给你听</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="30" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></body></html>
