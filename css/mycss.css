@@ -1,0 +1,43 @@
+/* 文章页背景 */
+.layout_post>#post {
+    /* 以下代表透明度为0.7 可以自行修改*/
+    background: rgba(255,255,255,.7);
+}
+ 
+/* 所有页面背景 */
+#aside_content .card-widget, #recent-posts>.recent-post-item, .layout_page>div:first-child:not(.recent-posts), .layout_post>#page, .layout_post>#post, .read-mode .layout_post>#post{
+    /* 以下代表透明度为0.7 */
+    background: rgba(255,255,255,.7);
+}
+/*侧边卡片的透明度 */
+:root {
+  --card-bg: rgba(255, 255, 255, 0.9); /*这句话会让除了首页文章封面之外所有都透明，但是我想让阅读的不要透明，其他的比如分类，tag页透明，但是暂时不知怎么分开改*/
+}
+/* 页脚透明 */
+#footer {
+	/* 以下代表透明度为0.7 */
+	background: rgba(255,255,255, .0);
+}
+ 
+
+/* 翻页按钮居中 */
+
+#pagination {
+	width: 100%;
+	margin: auto;
+ }
+
+
+/*白天主题下的配置*/
+#aside-content>.card-widget.card-info {
+    /*换成自己图片的地址*/
+    background-image: url('/img/card.jpg');
+    background-repeat: no-repeat;
+    background-attachment: inherit;
+    background-size: 100%
+}
+/*黑暗主题下的配置*/
+[data-theme=dark] #aside-content>.card-widget.card-info {
+    /*换成自己图片的地址*/
+    background-image: url('./img/card.jpg') !important
+}
