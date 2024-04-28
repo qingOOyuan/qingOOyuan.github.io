@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-04-28T15:20:29.338Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="F_YEAhy4yQEXjJWmL1bR" version="24.2.5" type="device">
+<mxfile host="Electron" modified="2024-04-28T15:52:29.389Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="jsPtZcTjor6Udi6z7uef" version="24.2.5" type="device">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="875" dy="524" grid="1" gridSize="1" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -52,8 +52,8 @@
         <mxCell id="zkfFHV4jXpPFQw0GAbJ--20" value=".probe = s3c24xx_i2c_probe " style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rounded=0;shadow=0;html=0;fillColor=#f8cecc;strokeColor=#b85450;" parent="zkfFHV4jXpPFQw0GAbJ--17" vertex="1">
           <mxGeometry y="78" width="190" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="x74ONLKLbEEUaDy3nGKP-0" value="&lt;b&gt;I2C驱动框架：以2.6内核的s3c2440为例&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="274" y="60" width="240" height="30" as="geometry" />
+        <mxCell id="x74ONLKLbEEUaDy3nGKP-0" value="&lt;b&gt;I2C驱动框架：以2.6内核的s3c2440为例，attach_adapter方法&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="217" y="62" width="354" height="27" as="geometry" />
         </mxCell>
         <mxCell id="x74ONLKLbEEUaDy3nGKP-1" value="platform_bus" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#60a917;strokeColor=#2D7600;fontColor=#ffffff;fontStyle=1;fontSize=14;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="330" y="90" width="126" height="30" as="geometry" />
@@ -92,7 +92,7 @@
           <mxGeometry x="330" y="354" width="126" height="30" as="geometry" />
         </mxCell>
         <mxCell id="x74ONLKLbEEUaDy3nGKP-23" value="i2c_add_adapter：注册控制器" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="30.019999999999996" y="400" width="230" height="90" as="geometry">
+          <mxGeometry x="23.019999999999996" y="400" width="230" height="90" as="geometry">
             <mxRectangle x="220" y="120" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -106,7 +106,7 @@
           <mxGeometry y="90" width="230" as="geometry" />
         </mxCell>
         <mxCell id="x74ONLKLbEEUaDy3nGKP-28" value="i2c_add_driver：注册i2c设备驱动" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="527" y="400" width="230" height="90" as="geometry">
+          <mxGeometry x="536" y="400" width="230" height="90" as="geometry">
             <mxRectangle x="220" y="120" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -123,7 +123,7 @@
           <mxGeometry x="60" y="244" width="180" as="geometry" />
         </mxCell>
         <mxCell id="x74ONLKLbEEUaDy3nGKP-32" value="i2c_adapter实例：对应一个i2c控制器" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="22.819999999999997" y="509" width="239.2" height="130" as="geometry">
+          <mxGeometry x="16.819999999999997" y="513" width="239.2" height="130" as="geometry">
             <mxRectangle x="220" y="120" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -134,7 +134,7 @@
           <mxGeometry y="26" width="239.2" height="104" as="geometry" />
         </mxCell>
         <mxCell id="x74ONLKLbEEUaDy3nGKP-39" value="i2c设备驱动" style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="527" y="509" width="265.78" height="130" as="geometry">
+          <mxGeometry x="536" y="509" width="265.78" height="130" as="geometry">
             <mxRectangle x="220" y="120" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -157,7 +157,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="x74ONLKLbEEUaDy3nGKP-46" value="adapter控制器与i2c_driver设备驱动匹配过程" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#d80073;strokeColor=#A50040;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="269" y="400" width="250" height="248" as="geometry">
+          <mxGeometry x="269" y="413" width="250" height="248" as="geometry">
             <mxRectangle x="340" y="380" width="170" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -190,15 +190,18 @@
         </mxCell>
         <mxCell id="G1KVdKzn01JXvxTFv-ep-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.491;entryY=0.995;entryDx=0;entryDy=0;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="x74ONLKLbEEUaDy3nGKP-32" target="x74ONLKLbEEUaDy3nGKP-25" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="110" y="540" as="sourcePoint" />
-            <mxPoint x="160" y="490" as="targetPoint" />
+            <mxPoint x="103" y="540" as="sourcePoint" />
+            <mxPoint x="153" y="490" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="G1KVdKzn01JXvxTFv-ep-11" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.577;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="x74ONLKLbEEUaDy3nGKP-39" target="x74ONLKLbEEUaDy3nGKP-31" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="600" y="540" as="sourcePoint" />
-            <mxPoint x="650" y="490" as="targetPoint" />
+            <mxPoint x="609" y="540" as="sourcePoint" />
+            <mxPoint x="659" y="490" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="R5HppKQ3RYKkj_deB0A7-0" value="&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(251, 251, 251); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;提供注册adapter，i2c_driver，i2c_client的API接口&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="256" y="384" width="290" height="28" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
